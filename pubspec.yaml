@@ -1,0 +1,17 @@
+name: inherited_geolocation
+description: An inherited widget that manages geolocation updates from the user.
+version: 0.5.0
+homepage: https://github.com/aloisdeniel/inherited_geolocation
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  locale_latlng: ^1.0.2
+  geolocator: ^7.0.1
+  equatable: ^2.0.0
+  flutter:  
+    sdk: flutter
+
+dev_dependencies:
+  pedantic: ^1.9.0
