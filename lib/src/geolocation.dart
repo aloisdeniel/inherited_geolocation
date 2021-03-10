@@ -149,6 +149,8 @@ class _GeolocationState extends State<_Geolocation>
     WidgetsBinding.instance?.addObserver(this);
     _lastKnownPosition = widget.fallbackPosition;
     _controller = widget.controller ?? GeolocationController();
+    assert(_controller!._state == null,
+        'The controller is already used by an other Geolocation');
     _controller!._state = this;
     _controller!.status = GeolocationStatus.notStarted(widget.fallbackPosition);
     if (widget.isEnabled) {
@@ -175,9 +177,11 @@ class _GeolocationState extends State<_Geolocation>
     }
 
     if (widget.controller != _controller) {
+      final previousStatus = _controller!.status;
       _controller?._state = null;
-      _controller = widget.controller;
+      _controller = widget.controller ?? GeolocationController();
       _controller!._state = this;
+      _controller!._status = previousStatus;
     }
 
     super.didUpdateWidget(oldWidget);
@@ -217,9 +221,12 @@ class _GeolocationState extends State<_Geolocation>
 
   Future<void> _stopObservingStatus() async {
     if (_updates != null) {
-      _updateStatus(GeolocationStatus.notStarted(_lastKnownPosition!));
-      await _updates!.cancel();
-      _updates = null;
+      try {
+        await _updates!.cancel();
+      } finally {
+        _updateStatus(GeolocationStatus.notStarted(_lastKnownPosition!));
+        _updates = null;
+      }
     }
   }
 
@@ -355,6 +362,15 @@ class GeolocationController extends ChangeNotifier {
         state.widget.isEnabled, 'Associated Geolocation widget is disabled.');
     state._startObservingStatus(
         state.widget.isObserving, state.widget.requestPermissionIfNeeded);
+  }
+
+  void stop() {
+    final state = _state;
+    if (state == null) {
+      throw Exception('The controller isn\' associated to a Geolocation');
+    }
+
+    state._stopObservingStatus();
   }
 
   /// Open the system settings to help changing the permissions.

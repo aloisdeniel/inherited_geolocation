@@ -1,6 +1,6 @@
 name: inherited_geolocation
 description: An inherited widget that manages geolocation updates from the user.
-version: 0.5.0
+version: 0.5.0-beta.2
 homepage: https://github.com/aloisdeniel/inherited_geolocation
 
 environment:

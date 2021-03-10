@@ -1,5 +1,13 @@
 # inherited_geolocation
 
+<p>
+  <a href="https://pub.dartlang.org/packages/inherited_geolocation"><img src="https://img.shields.io/pub/v/inherited_geolocation.svg"></a>
+  <a href="https://www.buymeacoffee.com/aloisdeniel">
+    <img src="https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&amp;style=flat">
+  </a>
+</p>
+
+
 An inherited widget that manages geolocation updates from the user.
 
 ## Install

@@ -1,6 +1,7 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:equatable/equatable.dart';
 
+/// Represents a geolocation status.
 abstract class GeolocationStatus extends Equatable {
   const GeolocationStatus._(this.fallback);
 
