@@ -39,9 +39,9 @@ class Example extends StatelessWidget {
                 ),
               ),
               status.maybeMap(
-                permissionDenied: (permission) => ElevatedButton(
+                denied: () => ElevatedButton(
                   onPressed: () => controller.start(),
-                  child: Text('Geolocate me ($permission)!'),
+                  child: Text('Geolocate me'),
                 ),
                 disabled: (_) => ElevatedButton(
                   onPressed: () => controller.openSystemSettings(),

@@ -203,7 +203,7 @@ class _GeolocationState extends State<_Geolocation>
   }
 
   void _updateStatus(GeolocationStatus status) {
-    if (_controller!.status != status && mounted) {
+    if (_controller != null && _controller!.status != status && mounted) {
       setState(() {
         status.maybeMap(
           available: (position) => _lastKnownPosition = position,

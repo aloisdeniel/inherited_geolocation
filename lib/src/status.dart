@@ -29,14 +29,14 @@ abstract class GeolocationStatus extends Equatable {
     required T Function() starting,
     required T Function(bool serviceAvailable) disabled,
     required T Function(Position position) available,
-    required T Function(LocationPermission permission) permissionDenied,
+    required T Function() denied,
   }) {
     final value = this;
     if (value is PermissionDeniedStatus) {
       if (value.permission == LocationPermission.deniedForever) {
         return disabled(true);
       }
-      return permissionDenied(value.permission);
+      return denied();
     }
     if (value is AvailableStatus) {
       return available(value.position);
@@ -58,16 +58,16 @@ abstract class GeolocationStatus extends Equatable {
     T Function()? starting,
     T Function(bool serviceAvailable)? disabled,
     T Function(Position position)? available,
-    T Function(LocationPermission permission)? permissionDenied,
+    T Function()? denied,
     required T Function() orElse,
   }) {
     final value = this;
-    if (permissionDenied != null && value is PermissionDeniedStatus) {
+    if (denied != null && value is PermissionDeniedStatus) {
       if (disabled != null &&
           value.permission == LocationPermission.deniedForever) {
         return disabled(true);
       } else {
-        return permissionDenied(value.permission);
+        return denied();
       }
     } else if (available != null && value is AvailableStatus) {
       return available(value.position);
