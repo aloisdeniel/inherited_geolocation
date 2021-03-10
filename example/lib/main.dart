@@ -15,40 +15,20 @@ void main() {
   );
 }
 
-class Example extends StatefulWidget {
+class Example extends StatelessWidget {
   const Example({
     Key? key,
   }) : super(key: key);
 
   @override
-  _ExampleState createState() => _ExampleState();
-}
-
-class _ExampleState extends State<Example> {
-  GeolocationController? _controller;
-
-  @override
-  void initState() {
-    _controller = GeolocationController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller!.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Geolocation(
-      controller: _controller,
       child: GeolocationBuilder(
         available: (context, position) => Map(
           position: position,
           markerIcon: Icons.people,
         ),
-        fallback: (context, fallbackPosition, status) {
+        fallback: (context, fallbackPosition, status, controller) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -60,11 +40,11 @@ class _ExampleState extends State<Example> {
               ),
               status.maybeMap(
                 permissionDenied: (permission) => ElevatedButton(
-                  onPressed: () => _controller!.start(),
+                  onPressed: () => controller.start(),
                   child: Text('Geolocate me ($permission)!'),
                 ),
                 disabled: (_) => ElevatedButton(
-                  onPressed: () => _controller!.openSystemSettings(),
+                  onPressed: () => controller.openSystemSettings(),
                   child: Text('Verify my system settings'),
                 ),
                 orElse: () => Message('Loading'),

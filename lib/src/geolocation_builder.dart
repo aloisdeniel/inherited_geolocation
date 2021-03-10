@@ -30,6 +30,7 @@ class GeolocationBuilder extends StatelessWidget {
         context,
         status.fallback,
         status,
+        Geolocation.controllerOf(context),
       ),
     );
   }
@@ -39,4 +40,8 @@ typedef GeolocationAvailableWidgetBuilder = Widget Function(
     BuildContext context, Position position);
 
 typedef GeolocationFallbackWidgetBuilder = Widget Function(
-    BuildContext context, Position fallbackPosition, GeolocationStatus status);
+  BuildContext context,
+  Position fallbackPosition,
+  GeolocationStatus status,
+  GeolocationController controller,
+);

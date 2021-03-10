@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:geolocator/geolocator.dart';
+import 'package:inherited_geolocation/inherited_geolocation.dart';
 import 'package:locale_latlng/locale_latlng.dart';
 import 'status.dart';
 
@@ -53,6 +54,16 @@ class Geolocation extends StatelessWidget {
     }
 
     return inherited.status;
+  }
+
+  static GeolocationController controllerOf(BuildContext context) {
+    final inherited = context.findAncestorStateOfType<_GeolocationState>();
+
+    if (inherited == null) {
+      throw Exception('No Geolocation found in widget tree');
+    }
+
+    return inherited._controller!;
   }
 
   @override
